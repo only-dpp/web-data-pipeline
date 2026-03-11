@@ -63,7 +63,7 @@ API/Dashboard
 
 ## Estrutura do projeto
 
-´´´bash
+```bash
 app/
   api/ # rotas da API
   models/ # modelos do banco de dados
@@ -71,7 +71,8 @@ app/
   services/ # regras de negócio e processamento
   workers/ # tarefas assíncronas
   templates? # template HTML
-´´´
+```
+
 
 ---
 
@@ -94,6 +95,7 @@ Em andamento...
 ## Licença
 
 Este projeto está sob a licença MIT
+
 
 
 
