@@ -10,6 +10,9 @@ from app.api.record import router as record_router
 from app.models.source import Source
 from app.models.run import Run
 from app.models.record import Record
+#article imports
+from app.models.article import Article
+from app.api.article import router as article_router
 
 app = FastAPI(
     title="Web Data Pipeline"
@@ -21,6 +24,7 @@ app.include_router(source_router)
 app.include_router(scraper_router)
 app.include_router(run_router)
 app.include_router(record_router)
+app.include_router(article_router)
 
 
 @app.get("/")
