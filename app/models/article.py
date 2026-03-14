@@ -12,7 +12,7 @@ class Article(Base):
     source_id = Column(Integer, ForeignKey("sources.id"), nullable=False)
 
     title = Column(String, nullable=False)
-    url = Column(String, nullable=False)
+    url = Column(String, nullable=False, index=True)
     summary = Column(String)
 
     hash = Column(String, unique=True, index=True, nullable=False)
