@@ -16,7 +16,7 @@ class Record(Base):
 
     summary = Column(String)
 
-    hash = Column(String, index=True)
+    hash = Column(String, unique=True, index=True, nullable=False)
 
     published_at = Column(DateTime)
 
