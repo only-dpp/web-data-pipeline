@@ -28,16 +28,22 @@ def run_source_scraper(db: Session, source_id: int) -> dict:
         scraped_records = scrape_source(source)
 
         items_new = 0
+        seen_hashes = set()
 
         for item in scraped_records:
             article_hash = generate_record_hash(item["title"], item["url"])
+
+            # evita duplicata dentro da mesma coleta
+            if article_hash in seen_hashes:
+                continue
+
+            seen_hashes.add(article_hash)
 
             existing_article = db.query(Article).filter(Article.hash == article_hash).first()
             if existing_article:
                 continue
 
             summary = item["summary"]
-
             if not summary:
                 summary = extract_article_excerpt(item["url"])
 
@@ -70,7 +76,11 @@ def run_source_scraper(db: Session, source_id: int) -> dict:
         }
 
     except Exception as e:
+        db.rollback()  # importante
         run.status = "failed"
         run.finished_at = datetime.now(UTC)
+
+        db.add(run)
         db.commit()
+
         raise e
