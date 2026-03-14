@@ -1,103 +1,90 @@
-﻿# Web Data Pipeline
+# Web Data Pipeline
 
-O **Web Data Pipeline** é um sistema de ingestão e processamento de dados que coleta noticias de tecnologia a partir de páginas HTML, processa essas informaçôes e armazena os dados de forma estruturada
+Pipeline automatizado para coleta, processamento, ranking e distribuição de notícias de tecnologia via digest por e-mail.
 
-O objetivo do projeto é estudar e implementar conceitos de **data ingestion**, **processamento assíncrono**, **scraping configurável**, e **papelines de dados**, utilizando Python e ferramentas comuns em arquiteturas backend modernas.
+O projeto coleta artigos de múltiplas fontes, salva os dados em banco, aplica um sistema de ranking editorial, organiza os melhores conteúdos em seções e gera um digest em HTML pronto para envio por e-mail.
 
----
+## Preview
 
-## Funcionalidades
+> Adicione aqui screenshots do projeto
 
-- Cadastro de fontes de notícias
-- Coleta automática de páginas HTML
-- Scraping configurável via seletores CSS
-- Processamento e normalização de dados
-- Deduplicação de registros
-- Históricos de execuções de pipeline
-- Dashboard web para visualização dos dados
-- Envio de digest por email com notícias coletadas
+### Digest HTML
+![Digest Preview](docs/digest-preview.png)
+
+### Swagger / API
+![Swagger Preview](docs/swagger-preview.png)
 
 ---
 
-## Arquitetura
+## Features
 
-O sistema segue uma arquitetura baseada em **pipeline de insgestão de dados**
-```bash
+- Coleta de notícias de múltiplas fontes
+- Scrapers configuráveis por seletores CSS
+- Persistência em PostgreSQL
+- Fila assíncrona com Celery + Redis
+- Deduplicação por hash
+- Extração automática de resumo do artigo
+- Ranking editorial com múltiplos critérios
+- Seleção editorial por seções
+- Geração de digest em HTML
+- Envio de digest por e-mail via SMTP
+- Agendamento automático com Celery Beat
+
+---
+
+## Fontes testadas
+
+Atualmente o projeto foi testado com fontes como:
+
+- Hacker News
+- DEV Community
+- Ars Technica
+- TechCrunch
+
+> Como cada fonte é configurável por seletores CSS, novas fontes podem ser adicionadas sem alterar a arquitetura principal do sistema.
+
+---
+
+## Stack
+
+### Backend
+- FastAPI
+- SQLAlchemy
+- PostgreSQL
+
+### Processamento assíncrono
+- Celery
+- Redis
+
+### Scraping e parsing
+- Requests
+- BeautifulSoup
+
+### Renderização
+- Jinja2
+
+### Infra local
+- Docker
+
+---
+
+## Como funciona
+
+O fluxo do pipeline é:
+
+```text
 Sources
-|
-Scheduler
-|
-Workers
-|
-Processing
-|
-Database
-|
-API/Dashboard
-```
-
-## Fluxo de funcionamento:
-
-1. Fontes de dados são cadastradas no sistema
-2. O scheduler agenda execuções de pipeline
-3. Workers realizam o scraping das páginas
-4. Os dados coletados passam por processamento
-5. Registros normalizados são armazenados no banco
-6. Os dados podem ser visualizados via API ou dashboard
-7. O sisterma pode gerar digest periódico por email
-
----
-
-## Tecnologias utilizadas
-
-- **Python**
-- **FastAPI** - API  e backend do sistema
-- **Celery** - processamento assíncrono
-- **Redis** - broker de mensagens
-- **PostgreSQL** - banco de dados
-- **Jinja2** - renderização do dashboard
-- **HTMX** - interatividade no frontend
-- **Docker** - containerização do ambiente
-
----
-
-## Estrutura do projeto
-
-```bash
-app/
-  api/ # rotas da API
-  models/ # modelos do banco de dados
-  scrapers/ # lógica de scraping
-  services/ # regras de negócio e processamento
-  workers/ # tarefas assíncronas
-  templates/ # template HTML
-```
-
-
----
-
-## Objetivo do projeto
-
-Este projeto foi criado como forma de estudar e praticar:
-
-- pipelines de ingestão de dados
-- scraping configurável
-- processamento assícrono com Celery
-- arquitetura de workers
-- organização de sistemas backend em Python
-
----
-
-## Status do projeto
-
-Em andamento...
-
-## Licença
-
-Este projeto está sob a licença MIT
-
-
-
-
-
-
+   ↓
+HTML Scraper
+   ↓
+Article Extraction
+   ↓
+PostgreSQL
+   ↓
+Ranking Engine
+   ↓
+Editorial Selection
+   ↓
+Digest HTML Renderer
+   ↓
+Email Delivery
