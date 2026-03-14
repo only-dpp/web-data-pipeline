@@ -21,3 +21,7 @@ def create_source(db: Session, source_data: SourceCreate) -> Source:
     db.refresh(source)
 
     return source
+
+
+def list_sources(db: Session) -> list[Source]:
+    return db.query(Source).all()

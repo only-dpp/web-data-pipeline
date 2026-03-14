@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from app.database import Base, engine
 from app.api.source import router as source_router
+from app.api.scraper import router as scraper_router
 
 app = FastAPI(
     title="Web Data Pipeline"
@@ -10,6 +11,7 @@ app = FastAPI(
 Base.metadata.create_all(bind=engine)
 
 app.include_router(source_router)
+app.include_router(scraper_router)
 
 
 @app.get("/")
