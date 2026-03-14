@@ -6,8 +6,6 @@ O projeto coleta artigos de múltiplas fontes, salva os dados em banco, aplica u
 
 ## Preview
 
-> Adicione aqui screenshots do projeto
-
 ### Digest HTML
 ![Digest Preview](docs/digest-preview.png)
 
