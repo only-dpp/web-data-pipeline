@@ -7,6 +7,7 @@ from app.models.run import Run
 from app.models.article import Article
 from app.scrapers.html_scraper import scrape_source
 from app.services.hash_service import generate_record_hash
+from app.services.article_excerpt_service import extract_article_excerpt
 
 
 def run_source_scraper(db: Session, source_id: int) -> dict:
@@ -35,11 +36,16 @@ def run_source_scraper(db: Session, source_id: int) -> dict:
             if existing_article:
                 continue
 
+            summary = item["summary"]
+
+            if not summary:
+                summary = extract_article_excerpt(item["url"])
+
             article = Article(
                 source_id=source.id,
                 title=item["title"],
                 url=item["url"],
-                summary=item["summary"],
+                summary=summary,
                 hash=article_hash,
                 published_at=None,
             )

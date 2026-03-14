@@ -1,3 +1,7 @@
+#env
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import FastAPI
 #database imports
 from app.database import Base, engine
@@ -6,6 +10,8 @@ from app.api.source import router as source_router
 from app.api.scraper import router as scraper_router
 from app.api.run import router as run_router
 from app.api.record import router as record_router
+from app.api.digest import router as digest_router
+from app.api.digest_send import router as digest_send_router
 #models imports
 from app.models.source import Source
 from app.models.run import Run
@@ -25,7 +31,8 @@ app.include_router(scraper_router)
 app.include_router(run_router)
 app.include_router(record_router)
 app.include_router(article_router)
-
+app.include_router(digest_router)
+app.include_router(digest_send_router)
 
 @app.get("/")
 def read_root():
