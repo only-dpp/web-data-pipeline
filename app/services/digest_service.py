@@ -7,6 +7,9 @@ from app.services.digest_selection_service import build_digest_sections
 from app.services.digest_render_service import render_digest_html
 
 
+MIN_DIGEST_SCORE = 28.0
+
+
 def get_recent_articles(db: Session, hours: int = 24) -> list[Article]:
     cutoff = datetime.now(UTC) - timedelta(hours=hours)
 
@@ -21,6 +24,10 @@ def get_recent_articles(db: Session, hours: int = 24) -> list[Article]:
 def get_digest_preview(db: Session, hours: int = 24, limit: int = 10) -> dict:
     articles = get_recent_articles(db, hours=hours)
     ranked_articles = rank_articles(articles)
+    quality_ranked_articles = [article for article in ranked_articles if article.final_score >= MIN_DIGEST_SCORE]
+
+    if len(quality_ranked_articles) >= min(limit, 3):
+        ranked_articles = quality_ranked_articles
 
     return build_digest_sections(
         ranked_articles=ranked_articles,
