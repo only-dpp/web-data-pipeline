@@ -4,11 +4,17 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.dependencies.auth import require_internal_api_key
 from app.schemas.digest import DigestSendRequest
 from app.services.digest_service import get_digest_preview_html
 from app.services.email_service import send_html_email
+from app.tasks.notification_tasks import send_daily_digest_task
 
-router = APIRouter(prefix="/digest", tags=["digest"])
+router = APIRouter(
+    prefix="/digest",
+    tags=["digest"],
+    dependencies=[Depends(require_internal_api_key)],
+)
 
 
 @router.post("/send")
@@ -34,4 +40,14 @@ def send_digest_route(
         "status": "sent",
         "to_email": payload.to_email,
         "subject": subject,
+    }
+
+
+@router.post("/send/subscribers")
+def send_digest_to_subscribers_route():
+    task = send_daily_digest_task.delay()
+
+    return {
+        "status": "queued",
+        "task_id": task.id,
     }

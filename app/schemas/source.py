@@ -1,4 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, field_validator
+
+from app.core.url_security import validate_source_url
 
 
 class SourceCreate(BaseModel):
@@ -9,7 +11,12 @@ class SourceCreate(BaseModel):
     title_selector: str
     link_selector: str
     summary_selector: str | None = None
-    schedule_minutes: int = 60
+    schedule_minutes: int = Field(default=60, ge=1)
+
+    @field_validator("base_url", "list_url")
+    @classmethod
+    def validate_urls(cls, value: str) -> str:
+        return validate_source_url(value)
 
 
 class SourceResponse(BaseModel):

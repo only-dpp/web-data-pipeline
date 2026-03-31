@@ -1,11 +1,14 @@
+import logging
+
 import requests
 from bs4 import BeautifulSoup
 
+from app.core.http_client import DEFAULT_HEADERS, DEFAULT_TIMEOUT, get_http_session
+from app.core.url_security import URLSecurityError, assert_safe_outbound_url
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-}
+
+logger = logging.getLogger(__name__)
+HEADERS = DEFAULT_HEADERS
 
 
 def clean_text(text: str | None) -> str | None:
@@ -28,10 +31,17 @@ def truncate_text(text: str, max_length: int = 240) -> str:
 
 
 def extract_article_excerpt(url: str) -> str | None:
+    session = get_http_session()
+
     try:
-        response = requests.get(url, headers=HEADERS, timeout=10)
+        safe_url = assert_safe_outbound_url(url)
+        response = session.get(safe_url, headers=HEADERS, timeout=DEFAULT_TIMEOUT)
         response.raise_for_status()
-    except Exception:
+    except URLSecurityError:
+        logger.warning("Blocked unsafe outbound article URL: %s", url)
+        return None
+    except requests.RequestException:
+        logger.warning("Failed to fetch article excerpt from url=%s", url)
         return None
 
     try:
@@ -67,4 +77,5 @@ def extract_article_excerpt(url: str) -> str | None:
         return None
 
     except Exception:
+        logger.exception("Failed to parse article excerpt from url=%s", url)
         return None

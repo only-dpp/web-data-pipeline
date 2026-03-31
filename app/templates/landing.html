@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Data Pipeline | Digest diário de tecnologia por e-mail</title>
+<meta name="description" content="Receba um digest diário de tecnologia por e-mail, com notícias relevantes resumidas e organizadas para acompanhar o que importa sem abrir vários sites.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+    --bg:#f4f7fb;
+    --surface:#ffffff;
+    --surface-soft:rgba(255,255,255,0.72);
+    --ink:#0e1a2b;
+    --muted:#5c6b80;
+    --line:#d8e3ef;
+    --accent:#0f766e;
+    --accent-strong:#0b5d57;
+    --accent-soft:#d9f3ef;
+    --navy:#132238;
+    --shadow:0 24px 60px rgba(11, 32, 57, 0.12);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+    margin:0;
+    font-family:"IBM Plex Sans",sans-serif;
+    color:var(--ink);
+    background:
+        radial-gradient(circle at top left, rgba(15,118,110,0.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(19,34,56,0.12), transparent 28%),
+        linear-gradient(180deg, #f7fbff 0%, var(--bg) 100%);
+}
+a{color:inherit;}
+.page-shell{width:min(1180px, calc(100% - 40px));margin:0 auto;}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:24px 0 12px;}
+.brand{display:flex;align-items:center;gap:12px;font-family:"Manrope",sans-serif;font-weight:800;letter-spacing:-0.03em;}
+.brand-mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg, var(--navy), var(--accent));display:grid;place-items:center;color:#fff;box-shadow:0 14px 28px rgba(19,34,56,0.18);}
+.topbar-link{text-decoration:none;color:var(--muted);font-weight:600;}
+.hero{display:grid;grid-template-columns:1.1fr 0.9fr;gap:36px;align-items:center;padding:28px 0 40px;}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:rgba(15,118,110,0.10);color:var(--accent-strong);font-size:14px;font-weight:700;}
+.hero h1{margin:20px 0 18px;font-family:"Manrope",sans-serif;font-size:clamp(2.6rem, 6vw, 4.8rem);line-height:0.98;letter-spacing:-0.05em;}
+.hero p{margin:0;max-width:620px;color:var(--muted);font-size:1.08rem;line-height:1.7;}
+.hero-actions{display:flex;flex-wrap:wrap;gap:16px;margin-top:28px;}
+.button-primary,.button-secondary,.signup-button{display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:0 24px;border-radius:16px;border:none;font-weight:700;font-size:1rem;text-decoration:none;cursor:pointer;transition:transform 0.18s ease, box-shadow 0.18s ease;}
+.button-primary,.signup-button{background:linear-gradient(135deg, var(--accent), var(--accent-strong));color:#fff;box-shadow:0 18px 36px rgba(15,118,110,0.22);}
+.button-secondary{background:rgba(255,255,255,0.76);color:var(--navy);border:1px solid rgba(19,34,56,0.10);}
+.button-primary:hover,.button-secondary:hover,.signup-button:hover{transform:translateY(-2px);}
+.hero-meta{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px;color:var(--muted);font-size:0.95rem;}
+.hero-card{background:var(--surface-soft);border:1px solid rgba(255,255,255,0.65);backdrop-filter:blur(16px);border-radius:32px;box-shadow:var(--shadow);padding:28px;overflow:hidden;}
+.digest-window{background:#fff;border:1px solid var(--line);border-radius:24px;overflow:hidden;}
+.digest-bar{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line);background:#fbfdff;}
+.digest-title{font-family:"Manrope",sans-serif;font-weight:800;font-size:1.05rem;}
+.digest-pill{padding:8px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent-strong);font-size:0.78rem;font-weight:700;}
+.digest-body{padding:22px 20px 20px;}
+.digest-section{margin-bottom:20px;}
+.digest-label{margin-bottom:10px;color:var(--muted);font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;}
+.digest-item{padding:14px 0;border-top:1px solid #eef3f8;}
+.digest-item:first-child{border-top:none;padding-top:0;}
+.digest-item strong{display:block;margin-bottom:6px;font-size:1rem;}
+.digest-item span{color:var(--muted);font-size:0.94rem;line-height:1.55;}
+.stats,.problem-grid,.benefits-grid,.steps-grid{display:grid;gap:18px;}
+.stats{grid-template-columns:repeat(3, minmax(0, 1fr));margin-top:18px;}
+.problem-grid{grid-template-columns:repeat(3, minmax(0, 1fr));}
+.benefits-grid{grid-template-columns:repeat(4, minmax(0, 1fr));}
+.steps-grid{grid-template-columns:repeat(3, minmax(0, 1fr));}
+.stat-card,.problem-card,.benefit-card,.step-card,.panel,.cta-panel{background:var(--surface);border:1px solid rgba(19,34,56,0.08);border-radius:24px;box-shadow:var(--shadow);}
+.stat-card{padding:16px;}
+.stat-card strong{display:block;font-family:"Manrope",sans-serif;font-size:1.35rem;margin-bottom:6px;}
+.stat-card span,.problem-card p,.benefit-card p,.step-card p,.section-header p,.cta-panel p,.fineprint,.footer{color:var(--muted);}
+.section{padding:36px 0;}
+.section-header{max-width:700px;margin-bottom:26px;}
+.section-header h2,.cta-panel h2{margin:0 0 12px;font-family:"Manrope",sans-serif;font-size:clamp(1.9rem, 4vw, 2.8rem);letter-spacing:-0.04em;}
+.problem-card,.benefit-card,.step-card{padding:22px;}
+.problem-card strong,.benefit-card strong,.step-card strong{display:block;font-family:"Manrope",sans-serif;font-size:1.14rem;margin-bottom:10px;}
+.problem-card p,.benefit-card p,.step-card p,.cta-panel p{margin:0;line-height:1.65;}
+.benefit-icon,.step-index{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;margin-bottom:16px;font-weight:800;font-family:"Manrope",sans-serif;}
+.benefit-icon{background:rgba(19,34,56,0.08);color:var(--navy);}
+.step-index{background:var(--accent-soft);color:var(--accent-strong);}
+.value-layout{display:grid;grid-template-columns:0.9fr 1.1fr;gap:24px;align-items:stretch;}
+.value-copy{padding:28px;}
+.value-copy ul{margin:18px 0 0;padding-left:20px;color:var(--muted);line-height:1.8;}
+.trust-card{padding:28px;background:linear-gradient(180deg, #102039 0%, #17325a 100%);color:#fff;border-radius:24px;box-shadow:var(--shadow);}
+.trust-card h3{margin:0 0 12px;font-family:"Manrope",sans-serif;font-size:1.55rem;}
+.trust-card p{margin:0;color:rgba(255,255,255,0.78);line-height:1.7;}
+.trust-list{display:grid;gap:14px;margin-top:22px;}
+.trust-list div{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.92);}
+.signup-section{padding:34px 0 80px;}
+.cta-panel{padding:32px;background:linear-gradient(135deg, rgba(15,118,110,0.10), rgba(19,34,56,0.08)), var(--surface);}
+.signup-shell{display:grid;grid-template-columns:1.2fr 0.8fr;gap:24px;margin-top:24px;}
+.signup-form{display:grid;gap:14px;}
+.form-label{font-size:0.95rem;font-weight:600;}
+.form-row{display:grid;grid-template-columns:1fr auto;gap:12px;}
+.input-email{min-height:56px;width:100%;padding:0 18px;border-radius:16px;border:1px solid #c8d7e5;background:#fff;color:var(--ink);font:inherit;}
+.input-email:focus,.signup-button:focus,.button-primary:focus,.button-secondary:focus,.topbar-link:focus{outline:3px solid rgba(15,118,110,0.28);outline-offset:3px;}
+.signup-note{border-radius:18px;padding:18px;background:rgba(255,255,255,0.78);border:1px solid rgba(19,34,56,0.10);}
+.signup-note strong{display:block;margin-bottom:8px;font-family:"Manrope",sans-serif;}
+.flash{margin-top:16px;padding:14px 16px;border-radius:16px;font-weight:600;}
+.flash-success{background:#def7ec;color:#065f46;}
+.flash-error{background:#fee2e2;color:#991b1b;}
+.footer{padding:0 0 36px;font-size:0.92rem;text-align:center;}
+@media (max-width: 1024px){.hero,.value-layout,.signup-shell{grid-template-columns:1fr;}.benefits-grid{grid-template-columns:repeat(2, minmax(0, 1fr));}}
+@media (max-width: 760px){.page-shell{width:min(100% - 24px, 1180px);}.hero{gap:26px;padding-top:18px;}.problem-grid,.benefits-grid,.steps-grid,.stats,.form-row{grid-template-columns:1fr;}.topbar{align-items:flex-start;gap:16px;flex-direction:column;}.hero-card,.cta-panel{padding:22px;}}
+</style>
+</head>
+<body>
+<header class="page-shell topbar">
+    <div class="brand" aria-label="Web Data Pipeline">
+        <div class="brand-mark" aria-hidden="true">W</div>
+        <div>
+            <div>Web Data Pipeline</div>
+            <div style="font-size:0.86rem;color:var(--muted);font-weight:600;">Digest diário de tecnologia</div>
+        </div>
+    </div>
+    <a class="topbar-link" href="#signup">Receber o digest</a>
+</header>
+<main>
+    <section class="page-shell hero" aria-labelledby="hero-title">
+        <div>
+            <div class="eyebrow">Tecnologia relevante, sem ruído e sem perder tempo</div>
+            <h1 id="hero-title">Seu resumo diário do que realmente importa no mundo tech.</h1>
+            <p>Receba por e-mail um digest claro, selecionado e organizado com as notícias mais relevantes de tecnologia. Em vez de abrir vários sites e filtrar manchetes soltas, você começa o dia com uma visão prática, rápida e confiável.</p>
+            <div class="hero-actions">
+                <a class="button-primary" href="#signup">Quero receber o digest diário</a>
+                <a class="button-secondary" href="#como-funciona">Ver como funciona</a>
+            </div>
+            <div class="hero-meta">
+                <span>Leitura pensada para poucos minutos</span>
+                <span>Resumo organizado para facilitar a rotina</span>
+                <span>Feito para quem quer acompanhar tecnologia sem excesso</span>
+            </div>
+        </div>
+        <aside class="hero-card" aria-label="Exemplo de digest por e-mail">
+            <div class="digest-window">
+                <div class="digest-bar">
+                    <div>
+                        <div class="digest-title">Digest diário no seu e-mail</div>
+                        <div style="color:var(--muted);font-size:0.92rem;margin-top:4px;">Curado para leitura rápida e útil</div>
+                    </div>
+                    <div class="digest-pill">Entrega diária</div>
+                </div>
+                <div class="digest-body">
+                    <div class="digest-section">
+                        <div class="digest-label">Destaques</div>
+                        <div class="digest-item">
+                            <strong>O que movimentou a tecnologia hoje</strong>
+                            <span>Principais notícias resumidas em linguagem direta, com contexto suficiente para você entender o que mudou.</span>
+                        </div>
+                        <div class="digest-item">
+                            <strong>Sem abrir dez abas</strong>
+                            <span>Você recebe uma seleção pronta, organizada e fácil de consumir no e-mail.</span>
+                        </div>
+                    </div>
+                    <div class="digest-section">
+                        <div class="digest-label">Leitura rápida</div>
+                        <div class="digest-item">
+                            <strong>Mercado, produtos e movimentos importantes</strong>
+                            <span>Uma visão geral diária para acompanhar tendências e decisões sem ruído desnecessário.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="stats" aria-label="Indicadores do serviço">
+                <div class="stat-card"><strong>{{ stats.source_count }}</strong><span>fontes monitoradas</span></div>
+                <div class="stat-card"><strong>{{ stats.article_count }}</strong><span>itens já processados</span></div>
+                <div class="stat-card"><strong>{{ stats.subscriber_count }}</strong><span>e-mails ativos na lista</span></div>
+            </div>
+        </aside>
+    </section>
+
+    <section class="page-shell section" aria-labelledby="problema-title">
+        <div class="section-header">
+            <h2 id="problema-title">Acompanhar tecnologia não deveria parecer um segundo trabalho.</h2>
+            <p>Entre muitos sites, excesso de manchetes e notícias que pouco agregam, o tempo acaba indo embora antes mesmo de você entender o que vale a pena acompanhar.</p>
+        </div>
+        <div class="problem-grid">
+            <article class="problem-card"><strong>Muita informação dispersa</strong><p>O conteúdo está espalhado em vários sites, newsletters, redes e portais diferentes.</p></article>
+            <article class="problem-card"><strong>Ruído demais</strong><p>No meio de tanta manchete, separar o que realmente importa consome tempo e energia.</p></article>
+            <article class="problem-card"><strong>Pouca praticidade</strong><p>Nem sempre dá para abrir várias fontes. O ideal é receber um resumo pronto, claro e confiável.</p></article>
+        </div>
+    </section>
+
+    <section class="page-shell section" aria-labelledby="benefits-title">
+        <div class="section-header">
+            <h2 id="benefits-title">Por que receber o digest por e-mail faz diferença</h2>
+            <p>O foco aqui é transformar o acompanhamento diário de tecnologia em algo leve, útil e fácil de encaixar na rotina.</p>
+        </div>
+        <div class="benefits-grid">
+            <article class="benefit-card"><div class="benefit-icon" aria-hidden="true">01</div><strong>Economia de tempo</strong><p>Você recebe o essencial já resumido, sem precisar vasculhar várias fontes manualmente.</p></article>
+            <article class="benefit-card"><div class="benefit-icon" aria-hidden="true">02</div><strong>Leitura rápida</strong><p>O conteúdo chega pensado para leitura ágil, com contexto suficiente para decidir o que aprofundar.</p></article>
+            <article class="benefit-card"><div class="benefit-icon" aria-hidden="true">03</div><strong>Visão diária organizada</strong><p>Você acompanha o mercado tech com mais consistência, sem a sensação de estar sempre correndo atrás.</p></article>
+            <article class="benefit-card"><div class="benefit-icon" aria-hidden="true">04</div><strong>Mais foco, menos ruído</strong><p>O digest prioriza relevância e organização para deixar a rotina mais simples e menos cansativa.</p></article>
+        </div>
+    </section>
+
+    <section class="page-shell section" id="como-funciona" aria-labelledby="steps-title">
+        <div class="section-header">
+            <h2 id="steps-title">Como funciona</h2>
+            <p>Uma experiência simples, pensada para quem quer acompanhar tecnologia sem complicação.</p>
+        </div>
+        <div class="steps-grid">
+            <article class="step-card"><div class="step-index" aria-hidden="true">1</div><strong>Você cadastra seu e-mail</strong><p>Entrar para a lista leva poucos segundos e sem fricção desnecessária.</p></article>
+            <article class="step-card"><div class="step-index" aria-hidden="true">2</div><strong>O sistema coleta e organiza</strong><p>As notícias são reunidas, filtradas e resumidas para que o conteúdo fique mais útil para o leitor.</p></article>
+            <article class="step-card"><div class="step-index" aria-hidden="true">3</div><strong>Você recebe um digest diário</strong><p>No seu e-mail, em um formato que dá para consumir rápido e decidir o que merece atenção extra.</p></article>
+        </div>
+    </section>
+
+    <section class="page-shell section" aria-labelledby="value-title">
+        <div class="section-header">
+            <h2 id="value-title">Uma experiência com cara de produto, não de feed interminável.</h2>
+            <p>O objetivo não é transformar sua caixa de entrada em mais um portal de notícias. É entregar uma leitura útil, com valor percebido e sensação de organização.</p>
+        </div>
+        <div class="value-layout">
+            <div class="panel value-copy">
+                <strong style="display:block;font-family:'Manrope',sans-serif;font-size:1.4rem;margin-bottom:10px;">O digest foi pensado para ser agradável de ler</strong>
+                <p style="margin:0;color:var(--muted);line-height:1.7;">A proposta é combinar curadoria, resumo e contexto em um formato confiável. Você não recebe uma enxurrada de links. Recebe uma visão diária mais clara do que aconteceu.</p>
+                <ul>
+                    <li>Resumo com foco no que ajuda a entender o cenário</li>
+                    <li>Formato leve para começar o dia melhor informado</li>
+                    <li>Experiência simples para quem quer acompanhar tecnologia com praticidade</li>
+                </ul>
+            </div>
+            <aside class="trust-card">
+                <h3>Mais clareza. Menos busca manual.</h3>
+                <p>Em vez de gastar tempo pulando entre vários sites, você recebe um ponto de partida confiável no e-mail. Isso aumenta a chance de acompanhar o mercado com regularidade.</p>
+                <div class="trust-list">
+                    <div>Seleção diária com proposta clara de utilidade</div>
+                    <div>Leitura acessível para público leigo e não técnico</div>
+                    <div>Visual de newsletter premium, sem parecer portal</div>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <section class="page-shell signup-section" aria-labelledby="signup-title">
+        <div class="cta-panel" id="signup">
+            <h2 id="signup-title">Receba o digest diário no seu e-mail</h2>
+            <p>Cadastre seu e-mail para entrar na lista e acompanhar tecnologia de forma mais prática, organizada e consistente.</p>
+
+            {% if signup in ["created", "reactivated", "existing"] %}
+            <div class="flash flash-success" role="status" aria-live="polite">
+                {% if signup == "created" %}
+                Seu e-mail foi cadastrado com sucesso. Agora você faz parte da lista.
+                {% elif signup == "reactivated" %}
+                Seu cadastro foi reativado. Você voltou para a lista do digest.
+                {% else %}
+                Esse e-mail já está cadastrado. Você já faz parte da lista.
+                {% endif %}
+            </div>
+            {% elif signup == "invalid" or signup == "error" %}
+            <div class="flash flash-error" role="alert">
+                {% if signup == "invalid" %}
+                Informe um e-mail válido para entrar na lista.
+                {% else %}
+                Não foi possível concluir o cadastro agora. Tente novamente em instantes.
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <div class="signup-shell">
+                <form class="signup-form" action="/subscribe" method="post">
+                    <label class="form-label" for="email">Seu melhor e-mail</label>
+                    <div class="form-row">
+                        <input class="input-email" id="email" name="email" type="email" placeholder="voce@empresa.com" autocomplete="email" required>
+                        <button class="signup-button" type="submit">Entrar para a lista</button>
+                    </div>
+                    <div class="fineprint">Cadastro rápido, sem complicação. A proposta é simples: entregar um resumo diário útil e agradável de ler.</div>
+                </form>
+                <aside class="signup-note" aria-label="Proposta de valor do cadastro">
+                    <strong>O que você vai receber</strong>
+                    <p style="margin:0;color:var(--muted);line-height:1.7;">Um digest diário com notícias relevantes, organizadas e resumidas para facilitar sua rotina. Ideal para acompanhar o mercado tech sem abrir vários sites nem perder tempo com ruído.</p>
+                </aside>
+            </div>
+        </div>
+    </section>
+</main>
+<footer class="page-shell footer">
+    Web Data Pipeline — digest diário de tecnologia por e-mail, com foco em clareza, praticidade e relevância.
+</footer>
+</body>
+</html>

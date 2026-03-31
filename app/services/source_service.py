@@ -1,14 +1,18 @@
 from sqlalchemy.orm import Session
 
+from app.core.url_security import validate_source_url
 from app.models.source import Source
 from app.schemas.source import SourceCreate
 
 
 def create_source(db: Session, source_data: SourceCreate) -> Source:
+    validated_base_url = validate_source_url(source_data.base_url)
+    validated_list_url = validate_source_url(source_data.list_url)
+
     source = Source(
         name=source_data.name,
-        base_url=source_data.base_url,
-        list_url=source_data.list_url,
+        base_url=validated_base_url,
+        list_url=validated_list_url,
         list_selector=source_data.list_selector,
         title_selector=source_data.title_selector,
         link_selector=source_data.link_selector,

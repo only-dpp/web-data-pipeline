@@ -2,271 +2,397 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-
-<title>Tech Digest</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Data Pipeline Digest</title>
 <style>
-
 body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:#f5f6fa;
     margin:0;
     padding:0;
-    color:#1f2937;
+    background:#f4f7fb;
+    color:#0e1a2b;
+    font-family:"IBM Plex Sans","Segoe UI",Arial,sans-serif;
 }
 
-.container{
+a{
+    color:#0f766e;
+}
+
+.email-shell{
+    width:100%;
+    padding:32px 12px;
+    background:
+        radial-gradient(circle at top left, rgba(15,118,110,0.12), transparent 28%),
+        linear-gradient(180deg, #f7fbff 0%, #f4f7fb 100%);
+}
+
+.email-card{
     max-width:760px;
-    margin:auto;
+    margin:0 auto;
     background:#ffffff;
-    padding:40px 36px;
+    border:1px solid #d8e3ef;
+    border-radius:28px;
+    overflow:hidden;
+    box-shadow:0 24px 60px rgba(11, 32, 57, 0.10);
 }
 
-.header{
-    border-bottom:2px solid #e5e7eb;
-    padding-bottom:20px;
-    margin-bottom:30px;
+.hero{
+    padding:32px 32px 26px;
+    background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.20), transparent 35%),
+        linear-gradient(135deg, #132238 0%, #0f766e 100%);
+    color:#ffffff;
 }
 
-.logo{
-    font-size:26px;
+.brand-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.brand-mark{
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    display:inline-block;
+    background:rgba(255,255,255,0.16);
+    color:#ffffff;
+    font-size:22px;
+    line-height:42px;
+    text-align:center;
+    font-weight:800;
+    font-family:"Manrope","Segoe UI",Arial,sans-serif;
+}
+
+.brand-copy{
+    font-size:12px;
+    line-height:1.45;
+    color:rgba(255,255,255,0.76);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+}
+
+.hero-pill{
+    display:inline-block;
+    padding:9px 12px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.12);
+    color:#ffffff;
+    font-size:11px;
     font-weight:700;
-    letter-spacing:-0.3px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
 }
 
-.tagline{
-    margin-top:6px;
-    color:#6b7280;
-    font-size:14px;
+.hero-title{
+    margin:22px 0 12px;
+    font-size:32px;
+    line-height:1.05;
+    font-weight:800;
+    letter-spacing:-0.04em;
+    font-family:"Manrope","Segoe UI",Arial,sans-serif;
 }
 
-.date{
-    margin-top:14px;
+.hero-text{
+    margin:0;
+    font-size:16px;
+    line-height:1.7;
+    color:rgba(255,255,255,0.82);
+    max-width:560px;
+}
+
+.hero-meta{
+    margin-top:22px;
     font-size:13px;
-    color:#9ca3af;
+    line-height:1.6;
+    color:rgba(255,255,255,0.78);
+}
+
+.content{
+    padding:26px 24px 30px;
 }
 
 .section{
-    margin-top:34px;
+    margin-top:18px;
+    padding:22px 20px;
+    border:1px solid #dfe8f2;
+    border-radius:22px;
+    background:linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+}
+
+.section:first-child{
+    margin-top:0;
+}
+
+.section-header{
+    margin-bottom:16px;
+}
+
+.section-kicker{
+    display:inline-block;
+    margin-bottom:10px;
+    padding:8px 12px;
+    border-radius:999px;
+    background:#d9f3ef;
+    color:#0b5d57;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
 }
 
 .section-title{
-    font-size:18px;
-    font-weight:700;
-    border-left:4px solid #111827;
-    padding-left:10px;
-    margin-bottom:18px;
+    margin:0;
+    font-size:22px;
+    line-height:1.2;
+    font-weight:800;
+    letter-spacing:-0.03em;
+    color:#132238;
+    font-family:"Manrope","Segoe UI",Arial,sans-serif;
+}
+
+.section-subtitle{
+    margin:8px 0 0;
+    color:#5c6b80;
+    font-size:14px;
+    line-height:1.6;
 }
 
 .article{
-    margin-bottom:26px;
+    margin-top:14px;
+    padding:18px 18px 16px;
+    border-radius:18px;
+    background:#ffffff;
+    border:1px solid #e7eef6;
+}
+
+.article:first-of-type{
+    margin-top:0;
 }
 
 .article-title{
-    font-size:18px;
-    font-weight:700;
-    margin:0 0 8px 0;
+    margin:0 0 10px;
+    font-size:20px;
+    line-height:1.35;
+    font-weight:800;
+    letter-spacing:-0.02em;
+    font-family:"Manrope","Segoe UI",Arial,sans-serif;
 }
 
 .article-title a{
+    color:#132238;
     text-decoration:none;
-    color:#111827;
 }
 
 .article-title a:hover{
     text-decoration:underline;
 }
 
-.meta{
+.meta-row{
+    margin-bottom:12px;
     font-size:12px;
-    color:#6b7280;
-    margin-bottom:8px;
+    line-height:1.5;
+    color:#5c6b80;
 }
 
 .badge{
     display:inline-block;
-    background:#111827;
-    color:#fff;
-    padding:3px 7px;
-    border-radius:5px;
+    margin:0 6px 6px 0;
+    padding:7px 10px;
+    border-radius:999px;
     font-size:11px;
-    margin-right:6px;
+    line-height:1;
+    font-weight:800;
+    letter-spacing:0.03em;
 }
 
-.category{
-    background:#e5e7eb;
-    color:#111827;
+.badge-score{
+    background:#132238;
+    color:#ffffff;
+}
+
+.badge-category{
+    background:#d9f3ef;
+    color:#0b5d57;
+}
+
+.domain{
+    color:#0f766e;
+    text-decoration:none;
 }
 
 .summary{
+    margin:0;
     font-size:15px;
-    line-height:1.6;
-    color:#374151;
-}
-
-.divider{
-    height:1px;
-    background:#e5e7eb;
-    margin:20px 0;
+    line-height:1.75;
+    color:#435166;
 }
 
 .footer{
-    border-top:2px solid #e5e7eb;
-    margin-top:40px;
-    padding-top:20px;
-    font-size:12px;
-    color:#9ca3af;
+    padding:0 24px 28px;
+}
+
+.footer-card{
+    padding:18px 18px 20px;
+    border-radius:20px;
+    background:#132238;
+    color:rgba(255,255,255,0.78);
+    font-size:13px;
+    line-height:1.7;
     text-align:center;
 }
 
+.footer-card strong{
+    display:block;
+    margin-bottom:6px;
+    color:#ffffff;
+    font-size:15px;
+    font-family:"Manrope","Segoe UI",Arial,sans-serif;
+}
+
+@media only screen and (max-width: 640px){
+    .email-shell{
+        padding:16px 8px;
+    }
+
+    .hero{
+        padding:24px 20px 22px;
+    }
+
+    .content{
+        padding:18px 16px 22px;
+    }
+
+    .footer{
+        padding:0 16px 18px;
+    }
+
+    .brand-row{
+        display:block;
+    }
+
+    .hero-pill{
+        margin-top:14px;
+    }
+
+    .hero-title{
+        font-size:28px;
+    }
+
+    .article-title{
+        font-size:18px;
+    }
+}
 </style>
 </head>
-
 <body>
+<div class="email-shell">
+    <div class="email-card">
+        <div class="hero">
+            <div class="brand-row">
+                <div class="brand">
+                    <div class="brand-mark">W</div>
+                    <div class="brand-copy">
+                        Web Data Pipeline<br>
+                        Digest diário de tecnologia
+                    </div>
+                </div>
+                <div class="hero-pill">{{ digest.meta.selected_count }} histórias selecionadas</div>
+            </div>
 
-<div class="container">
+            <div class="hero-title">Seu resumo diário do que realmente importa no mundo tech.</div>
+            <p class="hero-text">Uma leitura rápida, organizada e mais agradável de consumir no e-mail, com os principais movimentos de tecnologia já resumidos para você.</p>
+            <div class="hero-meta">{{ now }}</div>
+        </div>
 
-<div class="header">
+        <div class="content">
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-kicker">Destaques</div>
+                    <h2 class="section-title">O que merece sua atenção primeiro</h2>
+                    <p class="section-subtitle">Os assuntos com maior peso no dia, em um formato pensado para leitura rápida.</p>
+                </div>
 
-<div class="logo">
-Tech Brief
+                {% for item in digest.highlights %}
+                <div class="article">
+                    <div class="article-title">
+                        <a href="{{ item.url }}">{{ item.title }}</a>
+                    </div>
+
+                    <div class="meta-row">
+                        <span class="badge badge-score">Pontuação {{ item.final_score }}</span>
+                        <span class="badge badge-category">{{ item.category }}</span>
+                        <a class="domain" href="{{ item.url }}">{{ item.domain }}</a>
+                    </div>
+
+                    {% if item.summary %}
+                    <p class="summary">{{ item.summary }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-kicker">Radar técnico</div>
+                    <h2 class="section-title">Movimentos, lançamentos e sinais do mercado</h2>
+                    <p class="section-subtitle">Uma visão mais ampla para acompanhar tendências sem abrir várias abas.</p>
+                </div>
+
+                {% for item in digest.technical_radar %}
+                <div class="article">
+                    <div class="article-title">
+                        <a href="{{ item.url }}">{{ item.title }}</a>
+                    </div>
+
+                    <div class="meta-row">
+                        <span class="badge badge-score">Pontuação {{ item.final_score }}</span>
+                        <span class="badge badge-category">{{ item.category }}</span>
+                        <a class="domain" href="{{ item.url }}">{{ item.domain }}</a>
+                    </div>
+
+                    {% if item.summary %}
+                    <p class="summary">{{ item.summary }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-kicker">Leitura rápida</div>
+                    <h2 class="section-title">Para passar o olho e seguir o dia</h2>
+                    <p class="section-subtitle">Notas curtas para manter contexto e não perder o que está acontecendo.</p>
+                </div>
+
+                {% for item in digest.quick_reads %}
+                <div class="article">
+                    <div class="article-title">
+                        <a href="{{ item.url }}">{{ item.title }}</a>
+                    </div>
+
+                    <div class="meta-row">
+                        <span class="badge badge-category">{{ item.category }}</span>
+                        <a class="domain" href="{{ item.url }}">{{ item.domain }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-card">
+                <strong>Web Data Pipeline Digest</strong>
+                Conteúdo organizado para reduzir ruído, economizar tempo e ajudar você a acompanhar tecnologia com mais clareza.
+            </div>
+        </div>
+    </div>
 </div>
-
-<div class="tagline">
-As notícias mais relevantes de tecnologia e desenvolvimento.
-</div>
-
-<div class="date">
-{{ digest.meta.selected_count }} histórias selecionadas · {{ now }}
-</div>
-
-</div>
-
-
-
-<!-- HIGHLIGHTS -->
-
-<div class="section">
-
-<div class="section-title">
-Destaques
-</div>
-
-{% for item in digest.highlights %}
-
-<div class="article">
-
-<div class="article-title">
-<a href="{{ item.url }}">{{ item.title }}</a>
-</div>
-
-<div class="meta">
-
-<span class="badge">Score {{ item.final_score }}</span>
-
-<span class="badge category">
-{{ item.category }}
-</span>
-
-· {{ item.domain }}
-
-</div>
-
-{% if item.summary %}
-<div class="summary">
-{{ item.summary }}
-</div>
-{% endif %}
-
-</div>
-
-{% endfor %}
-
-</div>
-
-
-
-<!-- RADAR -->
-
-<div class="section">
-
-<div class="section-title">
-Radar Técnico
-</div>
-
-{% for item in digest.technical_radar %}
-
-<div class="article">
-
-<div class="article-title">
-<a href="{{ item.url }}">{{ item.title }}</a>
-</div>
-
-<div class="meta">
-
-<span class="badge">Score {{ item.final_score }}</span>
-
-<span class="badge category">
-{{ item.category }}
-</span>
-
-· {{ item.domain }}
-
-</div>
-
-{% if item.summary %}
-<div class="summary">
-{{ item.summary }}
-</div>
-{% endif %}
-
-</div>
-
-{% endfor %}
-
-</div>
-
-
-
-<!-- QUICK READS -->
-
-<div class="section">
-
-<div class="section-title">
-Leitura rápida
-</div>
-
-{% for item in digest.quick_reads %}
-
-<div class="article">
-
-<div class="article-title">
-<a href="{{ item.url }}">{{ item.title }}</a>
-</div>
-
-<div class="meta">
-<span class="badge category">
-{{ item.category }}
-</span>
-
-· {{ item.domain }}
-</div>
-
-</div>
-
-{% endfor %}
-
-</div>
-
-
-
-<div class="footer">
-
-Este digest foi gerado automaticamente pelo Web Data Pipeline.
-
-</div>
-
-</div>
-
 </body>
 </html>

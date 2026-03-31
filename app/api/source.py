@@ -2,10 +2,15 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.dependencies.auth import require_internal_api_key
 from app.schemas.source import SourceCreate, SourceResponse
 from app.services.source_service import create_source, list_sources
 
-router = APIRouter(prefix="/sources", tags=["sources"])
+router = APIRouter(
+    prefix="/sources",
+    tags=["sources"],
+    dependencies=[Depends(require_internal_api_key)],
+)
 
 
 @router.post("", response_model=SourceResponse)
