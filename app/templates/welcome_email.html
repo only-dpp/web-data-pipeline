@@ -8,87 +8,89 @@
 body{
     margin:0;
     padding:0;
-    background:#f4f7fb;
-    color:#0e1a2b;
-    font-family:"IBM Plex Sans","Segoe UI",Arial,sans-serif;
+    background:#5a16cc;
+    color:#1d1742;
+    font-family:"Segoe UI",Arial,sans-serif;
 }
 
 .shell{
     width:100%;
-    padding:32px 12px;
+    padding:28px 10px;
     background:
-        radial-gradient(circle at top left, rgba(15,118,110,0.14), transparent 30%),
-        linear-gradient(180deg, #f7fbff 0%, #f4f7fb 100%);
+        radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 18%),
+        radial-gradient(circle at 85% 14%, rgba(255,91,189,0.18), transparent 18%),
+        linear-gradient(135deg, #4b05b8 0%, #6f16dc 52%, #8a2cff 100%);
 }
 
 .card{
     max-width:700px;
     margin:0 auto;
-    background:#ffffff;
-    border:1px solid #d8e3ef;
-    border-radius:28px;
+    border-radius:30px;
     overflow:hidden;
-    box-shadow:0 24px 60px rgba(11, 32, 57, 0.10);
+    background:#f7f5ff;
+    box-shadow:0 28px 70px rgba(24, 0, 72, 0.28);
 }
 
 .hero{
-    padding:34px 32px 26px;
-    background:linear-gradient(135deg, #132238 0%, #0f766e 100%);
+    padding:28px 28px 24px;
+    background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.12), transparent 30%),
+        linear-gradient(135deg, #5a16cc 0%, #7b22ee 100%);
     color:#ffffff;
 }
 
 .brand{
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:10px;
 }
 
 .brand-mark{
-    width:42px;
-    height:42px;
-    border-radius:14px;
-    background:rgba(255,255,255,0.16);
-    text-align:center;
-    line-height:42px;
-    font-size:22px;
-    font-weight:800;
-    font-family:"Manrope","Segoe UI",Arial,sans-serif;
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:#ffffff;
+    box-shadow:0 0 0 5px rgba(255,255,255,0.10);
 }
 
 .brand-copy{
     font-size:12px;
     line-height:1.45;
-    color:rgba(255,255,255,0.78);
+    color:rgba(255,255,255,0.80);
     text-transform:uppercase;
     letter-spacing:0.08em;
+    font-weight:700;
 }
 
 .title{
-    margin:22px 0 12px;
-    font-size:31px;
+    margin:22px 0 10px;
+    max-width:520px;
+    font-size:32px;
     line-height:1.06;
     font-weight:800;
     letter-spacing:-0.04em;
-    font-family:"Manrope","Segoe UI",Arial,sans-serif;
+    text-transform:uppercase;
 }
 
 .hero-text{
     margin:0;
-    font-size:16px;
-    line-height:1.72;
+    max-width:560px;
+    font-size:15px;
+    line-height:1.7;
     color:rgba(255,255,255,0.84);
 }
 
 .content{
-    padding:26px 24px 30px;
+    padding:22px 20px 26px;
+    background:#f7f5ff;
 }
 
 .welcome-card,
 .info-card{
-    padding:22px 20px;
-    border-radius:22px;
-    border:1px solid #e1ebf4;
-    background:linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+    padding:22px 18px;
+    border-radius:24px;
+    background:#ffffff;
+    border:1px solid #e8e0ff;
 }
 
 .welcome-card{
@@ -98,10 +100,10 @@ body{
 .pill{
     display:inline-block;
     margin-bottom:12px;
-    padding:8px 12px;
+    padding:7px 12px;
     border-radius:999px;
-    background:#d9f3ef;
-    color:#0b5d57;
+    background:#efe7ff;
+    color:#6526db;
     font-size:11px;
     font-weight:800;
     letter-spacing:0.08em;
@@ -110,7 +112,7 @@ body{
 
 .copy{
     margin:0;
-    color:#435166;
+    color:#4f4677;
     font-size:15px;
     line-height:1.75;
 }
@@ -118,9 +120,9 @@ body{
 .email-tag{
     display:inline-block;
     margin-top:14px;
-    padding:10px 14px;
-    border-radius:14px;
-    background:#132238;
+    padding:11px 14px;
+    border-radius:16px;
+    background:#5a16cc;
     color:#ffffff;
     font-size:13px;
     font-weight:700;
@@ -129,20 +131,25 @@ body{
 .steps{
     margin:18px 0 0;
     padding-left:18px;
-    color:#435166;
+    color:#4f4677;
     line-height:1.85;
     font-size:15px;
 }
 
+.steps li{
+    margin-bottom:6px;
+}
+
 .footer{
-    padding:0 24px 28px;
+    padding:0 20px 22px;
+    background:#f7f5ff;
 }
 
 .footer-box{
     padding:18px 18px 20px;
-    border-radius:20px;
-    background:#132238;
-    color:rgba(255,255,255,0.78);
+    border-radius:22px;
+    background:#5a16cc;
+    color:rgba(255,255,255,0.80);
     font-size:13px;
     line-height:1.7;
     text-align:center;
@@ -153,7 +160,28 @@ body{
     margin-bottom:6px;
     color:#ffffff;
     font-size:15px;
-    font-family:"Manrope","Segoe UI",Arial,sans-serif;
+}
+
+@media only screen and (max-width: 640px){
+    .shell{
+        padding:16px 8px;
+    }
+
+    .hero{
+        padding:22px 20px 20px;
+    }
+
+    .content{
+        padding:16px 14px 20px;
+    }
+
+    .footer{
+        padding:0 14px 16px;
+    }
+
+    .title{
+        font-size:28px;
+    }
 }
 </style>
 </head>
@@ -162,30 +190,30 @@ body{
     <div class="card">
         <div class="hero">
             <div class="brand">
-                <div class="brand-mark">W</div>
+                <div class="brand-mark"></div>
                 <div class="brand-copy">
                     Web Data Pipeline<br>
                     Digest diário de tecnologia
                 </div>
             </div>
             <div class="title">Bem-vindo. Seu lugar na lista já está garantido.</div>
-            <p class="hero-text">A partir de agora, você está inscrito para receber um digest diário com o que realmente importa no mundo da tecnologia, de um jeito mais claro, rápido e agradável de acompanhar.</p>
+            <p class="hero-text">A partir de agora, você está inscrito para receber um digest diário com o que realmente importa no mundo da tecnologia, em um formato mais limpo, rápido e gostoso de acompanhar.</p>
         </div>
 
         <div class="content">
             <div class="welcome-card">
                 <div class="pill">Cadastro confirmado</div>
-                <p class="copy">Seu e-mail foi registrado com sucesso para receber nossas edições diárias. A proposta é simples: menos ruído, mais contexto e uma leitura que cabe na rotina.</p>
+                <p class="copy">Seu e-mail foi registrado com sucesso para receber as próximas edições. A proposta é simples: menos ruído, mais contexto e uma leitura que cabe melhor na rotina.</p>
                 <div class="email-tag">{{ subscriber_email }}</div>
             </div>
 
             <div class="info-card">
                 <div class="pill">O que esperar</div>
-                <p class="copy">Todos os dias, você vai receber uma seleção organizada de notícias de tecnologia, com resumos curtos e foco no que vale a pena acompanhar.</p>
+                <p class="copy">Todos os dias, você vai receber uma seleção organizada das notícias mais relevantes de tecnologia, com resumo curto e foco no que realmente vale sua atenção.</p>
                 <ul class="steps">
                     <li>Principais movimentos do dia em um só lugar</li>
-                    <li>Leitura rápida, sem precisar abrir vários sites</li>
-                    <li>Mais clareza para acompanhar o mercado tech com consistência</li>
+                    <li>Leitura mais leve, sem depender de abrir vários sites</li>
+                    <li>Mais clareza para acompanhar o mercado tech com constância</li>
                 </ul>
             </div>
         </div>
